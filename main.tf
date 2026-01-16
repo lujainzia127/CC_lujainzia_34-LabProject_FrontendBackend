@@ -103,26 +103,55 @@ resource "local_file" "ansible_inventory" {
   })
 }
 
-# --- Trigger Ansible automatically after infra ---
-resource "null_resource" "configure_with_ansible" {
-  triggers = {
-    frontend_ip = aws_instance.frontend.public_ip
-    backends    = join(",", [for b in aws_instance.backend : b.public_ip])
-  }
-
+# --- Wait for instances to be ready ---
+resource "null_resource" "wait_for_instances" {
   depends_on = [
     aws_instance.frontend,
     aws_instance.backend,
     local_file.ansible_inventory
   ]
 
+  triggers = {
+    frontend_id = aws_instance.frontend.id
+    backend_ids = join(",", [for b in aws_instance.backend : b.id])
+  }
+
   provisioner "local-exec" {
     command = <<-EOT
-      set -e
-      echo "Waiting 60s for EC2 SSH readiness..."
-      sleep 60
-      cd ansible
-      ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory/hosts playbooks/site.yaml
+      echo "Waiting for instances to be ready..."
+      sleep 90
+    EOT
+  }
+}
+
+# --- Run Ansible playbook automatically ---
+resource "null_resource" "run_ansible" {
+  depends_on = [
+    null_resource.wait_for_instances
+  ]
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo "================================"
+      echo "Running Ansible Configuration..."
+      echo "================================"
+      
+      export ANSIBLE_HOST_KEY_CHECKING=False
+      export ANSIBLE_CONFIG=${path.module}/ansible/ansible.cfg
+      export ANSIBLE_ROLES_PATH=${path.module}/ansible/roles
+      
+      ansible-playbook \
+        -i ${path.module}/ansible/inventory/hosts \
+        ${path.module}/ansible/playbooks/site.yaml \
+        -v
+      
+      echo "================================"
+      echo "Ansible Configuration Complete!"
+      echo "================================"
     EOT
   }
 }
