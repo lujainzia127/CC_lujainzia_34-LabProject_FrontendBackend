@@ -324,44 +324,6 @@ upstream backend_servers {
 
 ---
 
-## 📊 Project Requirements Compliance
-
-### ✅ Section A: Terraform Infrastructure Design (25 Marks)
-
-- [x] VPC, Subnet, Internet Gateway, Route Table configured
-- [x] Security Groups with proper ingress/egress rules
-- [x] 1 frontend + 3 backend instances with meaningful tags
-- [x] Variables used for all configurable values
-
-### ✅ Section B: Ansible Roles & Playbook Structure (25 Marks)
-
-- [x] Separate roles for `backend` and `frontend`
-- [x] Proper role structure (tasks, handlers, templates)
-- [x] No monolithic playbook - uses role-based architecture
-- [x] Handlers used for service restarts
-
-### ✅ Section C: Nginx Frontend + Backend HTTPD Behavior (25 Marks)
-
-- [x] All 3 backends running HTTPD with distinct content
-- [x] Nginx configured as reverse proxy with upstream
-- [x] 2 primary + 1 backup backend configuration
-- [x] Failover behavior verified
-
-### ✅ Section D: Terraform–Ansible Automation & Idempotence (15 Marks)
-
-- [x] Ansible triggered automatically from Terraform
-- [x] Single `terraform apply -auto-approve` completes everything
-- [x] Re-running apply is idempotent (no errors)
-
-### ✅ Section E: Code Quality, Documentation & Git Usage (10 Marks)
-
-- [x] Clear directory structure and variable naming
-- [x] Comprehensive README with usage instructions
-- [x] Clean Git history (no secrets, no state files)
-- [x] Proper `.gitignore` configuration
-
-**Total Score: 100/100** ✨
-
 ---
 
 ## 🧹 Cleanup
@@ -475,3 +437,4 @@ This project is for educational purposes as part of Cloud Computing coursework a
 
 **Last Updated:** January 2026  
 **Project Status:** ✅ Complete and Tested
+
