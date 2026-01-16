@@ -2,7 +2,7 @@
 
 **Student:** Lujain Zia (034)  
 **Course:** Cloud Computing  
-**Instructor:** Sir Muhammad Shoaib  
+**Instructor:** Sir Waqas Saleem
 **Date:** January 15, 2026
 
 ---
@@ -437,4 +437,5 @@ This project is for educational purposes as part of Cloud Computing coursework a
 
 **Last Updated:** January 2026  
 **Project Status:** ✅ Complete and Tested
+
 
