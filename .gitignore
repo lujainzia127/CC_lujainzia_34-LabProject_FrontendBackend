@@ -1,3 +1,6 @@
+# AWS CLI installer artifacts
+aws/
+awscliv2.zip
 .terraform/
 *.tfstate
 *.tfstate.*
