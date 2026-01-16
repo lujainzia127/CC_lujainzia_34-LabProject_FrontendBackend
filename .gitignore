@@ -1,0 +1,10 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+terraform.tfvars
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+ansible/inventory/hosts

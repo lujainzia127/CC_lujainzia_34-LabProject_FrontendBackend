@@ -1,0 +1,16 @@
+---
+- name: Configure backend HTTPD servers
+  hosts: backends
+  become: true
+  roles:
+    - backend
+
+- name: Configure frontend Nginx load balancer
+  hosts: frontend
+  become: true
+  vars:
+    backend1_private_ip: "{{ hostvars[groups['backends'][0]].backend_private_ip }}"
+    backend2_private_ip: "{{ hostvars[groups['backends'][1]].backend_private_ip }}"
+    backup_backend_private_ip: "{{ hostvars[groups['backends'][2]].backend_private_ip }}"
+  roles:
+    - frontend
